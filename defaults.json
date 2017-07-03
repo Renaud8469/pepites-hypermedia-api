@@ -1,0 +1,8 @@
+{
+    "apiPort": 3005,
+    "appname": "etudiant-entrepreneur-api",
+    "log": {
+        "level": "debug",
+        "format": "simple"
+    }
+}
