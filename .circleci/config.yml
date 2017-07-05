@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node
+      - image: circleci/mongo:3.2.12
+    working_directory: ~/ee
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: ee-api-{{ checksum "package.json"}}
+
+      - run:
+          name: install
+          command: npm install
+
+      - save_cache:
+          key: ee-api-{{ checksum "package.json"}}
+          paths:
+            - ./node_modules
+
+      - run:
+          name: lint
+          command: npm run lint
+
+      - run:
+          name: seed
+          command: npm run seed
+
+      - run:
+          name: test
+          command: npm run test:ci
+
+      - run:
+          name: coverage
+          command: cat ./coverage/lcov.info | ./node_modules/.bin/coveralls --verbose
+
