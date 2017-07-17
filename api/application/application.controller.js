@@ -95,7 +95,7 @@ class ApplicationController {
                 }
                 //notify applicant
                 return Committee.getNextCommittee(pepite._id)
-                  .then((nextCommittee) => {
+                  .then(() => {
 			  /*
                     mailActions.sendApplication(
                       application,
