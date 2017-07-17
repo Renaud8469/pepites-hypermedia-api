@@ -96,7 +96,7 @@ class ApplicationController {
                 //notify applicant
                 return Committee.getNextCommittee(pepite._id)
                   .then(() => {
-			  /*
+                          /*
                     mailActions.sendApplication(
                       application,
                       pepite,
@@ -122,8 +122,7 @@ class ApplicationController {
                         application,
                         pepite,
                         (error, info) => { logMail(req.log, error, info) })
-                    }) 
-		    */
+                    })  */
                     return res.json(application)
                   })
               })
