@@ -8,7 +8,10 @@ const halInterceptor = interceptor(function(req, res) {
     intercept: function (body, send) {
       res.set('Content-type', 'application/vnd.hal+json')
       let obj = JSON.parse(body)
-      obj.media_type = 'I\'m afraid I can\'t let you do that.'
+      if (obj instanceof Array)
+        obj.push({hal : 'Yep'})
+      else 
+        obj.hal = 'I\'m afraid I can\'t let you do that.'
       send(JSON.stringify(obj))
     }
   }
