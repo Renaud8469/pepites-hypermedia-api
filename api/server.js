@@ -11,6 +11,7 @@ const formatError = require('./lib/middlewares/formatError')
 const mongoose = require('mongoose')
 var passport = require('passport')
 const Raven = require('raven')
+const halInterceptor = require('./format_converter')
 
 const config = require('./config')
 
@@ -70,6 +71,8 @@ function Server(options) {
   })
 
   app.use(bodyParser.json())
+
+  app.use(halInterceptor)
 
   routes.configure(app, options)
 
