@@ -8,6 +8,7 @@ const establishment = require('./../establishment')
 const stat = require('./../stat')
 const user = require('./../user')
 const auth = require('./../auth')
+const home = require('./../home')
 
 exports.configure = (app, options) => {
   app.use('/api/system', system(options))
@@ -20,4 +21,5 @@ exports.configure = (app, options) => {
   app.use('/api/stat', stat(options))
   app.use('/api/user', user(options))
   app.use('/api/auth', auth(options))
+  app.use('/api', home(options))
 }
