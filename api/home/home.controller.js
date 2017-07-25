@@ -1,11 +1,6 @@
 class HomeController {
   home(req, res) {
-    res.json({
-      _links: {
-        self: {
-          href: "/"
-        }
-    })
+    res.json({})
   }
 }
 
