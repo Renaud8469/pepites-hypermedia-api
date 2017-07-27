@@ -1,0 +1,355 @@
+[
+  {
+    "rel": "root",
+    "accessibleFrom": ["root"],
+    "href": "/api/",
+    "method": "get"
+  },
+  {
+    "rel": "application-read",
+    "accessibleFrom": ["root", "application-read", "application-create", "pepite-applications"],
+    "href": "/api/application/{id}",
+    "isUrlTemplate": true,
+    "method": "get"
+  },
+  {
+    "rel": "application-create",
+    "accessibleFrom": ["root"],
+    "href": "/api/application",
+    "method": "post",
+    "template":{
+      "project": {
+        "name": "string",
+        "summary": "string",
+        "type": "string",
+        "site": "string",
+        "status": "string",
+        "blog": "string",
+        "facebook": "string",
+        "twitter": "string",
+        "siret": "string",
+        "activitySummary": "string",
+        "stepSummary": "string",
+        "sector": "integer",
+        "otherSector": "integer",
+        "motiviation": "string",
+        "teamType": "string",
+        "linkedin": "string",
+        "team": "array"
+      },
+      "contact": {
+        "name": "string",
+        "firstname": "string",
+        "email": "email",
+        "phone": "phone",
+        "situation": "string",
+        "isRenew": "bool",
+        "schoolYear": "integer"
+      },
+      "profile": {
+        "gender": "string",
+        "situation": "string",
+        "askD2E": "bool",
+        "nationality": "string",
+        "motivation": "string",
+        "isPartTime": "bool",
+        "hasActivity": "bool",
+        "activity": "string",
+        "isUnemployed": "bool",
+        "isFreelance": "bool",
+        "birthDate": "Date",
+        "birthPlace": "string",
+        "ine": "string",
+        "address": "string",
+        "cp": "integer",
+        "city": "string",
+        "country": "string",
+        "twitter": "string",
+        "facebook": "string",
+        "linkedin": "string",
+        "viadeo": "string"
+      },
+      "career": {
+        "bac": {
+          "isOriginal": "bool",
+          "type": "string",
+          "country": "string",
+          "year": "integer",
+          "stream": "string",
+          "establishment": "string",
+          "city": "string"
+        },
+        "diploma": {
+          "year": "string",
+          "type": "integer",
+          "name": "string",
+          "sector": "string",
+          "establishment": "string",
+          "city": "string"
+        },
+        "tutor": {
+          "name": "string",
+          "firstname": "string",
+          "email": "string",
+          "skill": "string",
+          "replaceInternship": "bool",
+          "replaceModule": "bool",
+          "askYearOff": "bool"
+        },
+        "entrepreneurship": "array"
+      },
+      "pepite": {
+        "0": "integer",
+        "1": "integer",
+        "region": "integer",
+        "establishment": "integer",
+        "pepite": "integer",
+        "askCoworking": "bool"
+      }
+    }  
+  },
+  {
+    "rel": "application-update",
+    "accessibleFrom": ["root", "application-read", "application-create"],
+    "href": "/api/application/{id}",
+    "isUrlTemplate": true,
+    "method": "put",
+    "template": {
+      "project": {
+        "name": "string",
+        "summary": "string",
+        "type": "string",
+        "site": "string",
+        "status": "string",
+        "blog": "string",
+        "facebook": "string",
+        "twitter": "string",
+        "siret": "string",
+        "activitySummary": "string",
+        "stepSummary": "string",
+        "sector": "integer",
+        "otherSector": "integer",
+        "motiviation": "string",
+        "teamType": "string",
+        "linkedin": "string",
+        "team": "array"
+      },
+      "contact": {
+        "name": "string",
+        "firstname": "string",
+        "email": "email",
+        "phone": "phone",
+        "situation": "string",
+        "isRenew": "bool",
+        "schoolYear": "integer"
+      },
+      "profile": {
+        "gender": "string",
+        "situation": "string",
+        "askD2E": "bool",
+        "nationality": "string",
+        "motivation": "string",
+        "isPartTime": "bool",
+        "hasActivity": "bool",
+        "activity": "string",
+        "isUnemployed": "bool",
+        "isFreelance": "bool",
+        "birthDate": "Date",
+        "birthPlace": "string",
+        "ine": "string",
+        "address": "string",
+        "cp": "integer",
+        "city": "string",
+        "country": "string",
+        "twitter": "string",
+        "facebook": "string",
+        "linkedin": "string",
+        "viadeo": "string"
+      },
+      "career": {
+        "bac": {
+          "isOriginal": "bool",
+          "type": "string",
+          "country": "string",
+          "year": "integer",
+          "stream": "string",
+          "establishment": "string",
+          "city": "string"
+        },
+        "diploma": {
+          "year": "string",
+          "type": "integer",
+          "name": "string",
+          "sector": "string",
+          "establishment": "string",
+          "city": "string"
+        },
+        "tutor": {
+          "name": "string",
+          "firstname": "string",
+          "email": "string",
+          "skill": "string",
+          "replaceInternship": "bool",
+          "replaceModule": "bool",
+          "askYearOff": "bool"
+        },
+        "entrepreneurship": "array"
+      },
+      "pepite": {
+        "0": "integer",
+        "1": "integer",
+        "region": "integer",
+        "establishment": "integer",
+        "pepite": "integer",
+        "askCoworking": "bool"
+      }
+    }
+
+
+  },
+  {
+    "rel": "application-send",
+    "accessibleFrom": ["application-create", "application-read", "application-update"],
+    "href": "/api/application/{id}/send",
+    "isUrlTemplate": true,
+    "method": "put"
+  },
+  {
+    "rel": "application-review",
+    "accessibleFrom": ["root", "application-read"],
+    "href": "/api/committeeAnswer/{id}",
+    "isUrlTemplate": true,
+    "method": "put",
+    "template": {
+      "opinion": "string",
+      "hasD2E": "bool",
+      "status": "accepted||refused"
+    },
+    "authRequired": true
+  },
+  {
+    "rel": "pepite-list",
+    "accessibleFrom": ["root", "pepite-read"],
+    "href": "/api/pepite",
+    "method": "get"
+  },
+  {
+    "rel": "pepite-read",
+    "accessibleFrom": ["root", "pepite-list"],
+    "href": "/api/pepite/{id}",
+    "isUrlTemplate": true,
+    "method": "get"
+  },
+  {
+    "rel": "pepite-applications",
+    "accessibleFrom": ["root", "pepite-list", "pepite-read"],
+    "href": "/api/pepite/{id}/application",
+    "isUrlTemplate": true,
+    "method": "get",
+    "authRequired": true
+  },
+  {
+    "rel": "committee-list",
+    "accessibleFrom": ["pepite-list", "pepite-read"],
+    "href": "/api/pepite/{pepiteId}/committee/",
+    "isUrlTemplate": true,
+    "method": "get"
+  },
+  {
+    "rel": "committee-next",
+    "accessibleFrom": ["pepite-list", "pepite-read","committee-list"],
+    "href": "/api/pepite/{pepiteId}/committee/next",
+    "isUrlTemplate": true,
+    "method": "get"
+  },
+  {
+    "rel": "committee-create",
+    "accessibleFrom": ["root", "commitee-list", "pepite-read"],
+    "href": "/api/pepite/{pepiteId}/committee/",
+    "isUrlTemplate": true,
+    "method": "post",
+    "template": {
+      "date": "Date",
+      "lastApplicationDate": "Date",
+      "message": "string"
+    },
+    "authRequired": true
+  },
+  {
+    "rel": "committee-update",
+    "accessibleFrom": ["commitee-list", "committee-create"],
+    "href": "/api/pepite/{pepiteId}/committee/{id}",
+    "isUrlTemplate": true,
+    "method": "put",
+    "template": {
+      "date": "Date",
+      "lastApplicationDate": "Date",
+      "message": "string"
+    }, 
+    "authRequired": true
+  },
+  {
+    "rel": "committee-delete",
+    "accessibleFrom": ["commitee-list", "committee-create", "committee-update"],
+    "href": "/api/pepite/{pepiteId}/committee/{id}",
+    "isUrlTemplate": true,
+    "method": "delete",
+    "authRequired": true
+  },
+  {
+    "rel": "region-list",
+    "accessibleFrom": ["root"],
+    "href": "/api/region",
+    "method": "get"
+  },
+  {
+    "rel": "region-read",
+    "accessibleFrom": ["root", "region-list"],
+    "href": "/api/region/{id}",
+    "isUrlTemplate": true,
+    "method": "get"
+  },
+  {
+    "rel": "region-schools",
+    "accessibleFrom": ["root", "region-list", "region-read"],
+    "href": "/api/region/{id}/establishment",
+    "isUrlTemplate": true,
+    "method": "get"
+  }, 
+  {
+    "rel": "region-pepites",
+    "accessibleFrom": ["root", "region-list", "region-read"],
+    "href": "/api/region/{id}/pepite",
+    "isUrlTemplate": true,
+    "method": "get"
+  },
+  {
+    "rel": "school-list",
+    "accessibleFrom": ["root"],
+    "href": "/api/establishment/",
+    "method": "get"
+  },
+  {
+    "rel": "school-read",
+    "accessibleFrom": ["root", "school-list"],
+    "href": "/api/establishment/{id}",
+    "isUrlTemplate": true,
+    "method": "get"
+  },
+  {
+    "rel": "user-list",
+    "accessibleFrom": ["root"],
+    "href": "/api/user/",
+    "method": "get"
+  },
+  {
+    "rel": "auth",
+    "accessibleFrom": ["root"],
+    "href": "/api/auth/",
+    "method": "post",
+    "template": {
+      "email": "string",
+      "password": "string"
+    } 
+  }
+]

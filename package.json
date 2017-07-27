@@ -37,6 +37,7 @@
     "istanbul": "0.4.4",
     "json2csv": "3.7.3",
     "jsonwebtoken": "7.1.9",
+    "lodash": "^4.17.4",
     "mocha": "2.5.3",
     "moment": "2.18.1",
     "mongoose": "4.6.0",
