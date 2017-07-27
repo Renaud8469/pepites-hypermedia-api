@@ -1,5 +1,5 @@
 const interceptor = require('express-interceptor')
-const transitions = require('../state_transitions/transitions')
+// const transitions = require('../state_transitions/transitions')
 
 const halInterceptor = interceptor(function(req, res) {
   return {
