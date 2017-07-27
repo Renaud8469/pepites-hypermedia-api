@@ -1,6 +1,7 @@
 const transitions = require('./transitions.json')
 const _ = require('lodash')
 const auth = require('../auth/auth.service')
+const addState = require('./state')
 
 // Function to add a transition to a router
 function addTransition (router, name, handleTemplate, target) {
@@ -8,32 +9,32 @@ function addTransition (router, name, handleTemplate, target) {
   if (transition.authRequired) {
     switch (transition.method) {
     case 'post':
-      router.post(transition.url, auth.isAuthenticated(), target)
+      router.post(transition.url, auth.isAuthenticated(), addState(name), target)
       break
     case 'put':
-      router.put(transition.url, auth.isAuthenticated(), target)
+      router.put(transition.url, auth.isAuthenticated(), addState(name), target)
       break
     case 'delete':
-      router.delete(transition.url, auth.isAuthenticated(), target)
+      router.delete(transition.url, auth.isAuthenticated(), addState(name), target)
       break
     case 'get':
     default:
-      router.get(transition.url, auth.isAuthenticated(), target)
+      router.get(transition.url, auth.isAuthenticated(), addState(name), target)
     }
   } else {
     switch (transition.method) {
     case 'post':
-      router.post(transition.url, target)
+      router.post(transition.url, addState(name), target)
       break
     case 'put':
-      router.put(transition.url, target)
+      router.put(transition.url, addState(name), target)
       break
     case 'delete':
-      router.delete(transition.url, target)
+      router.delete(transition.url, addState(name), target)
       break
     case 'get':
     default:
-      router.get(transition.url, target)
+      router.get(transition.url, addState(name), target)
     }
   }
 }
