@@ -15,7 +15,7 @@ exports.configure = (app, options) => {
   app.use(application(options))
   app.use(committeeAnswer(options))
   app.use(pepite(options))
-  // app.use(committee(options))
+  app.use(committee(options))
   app.use(region(options))
   app.use(establishment(options))
   app.use('/api/stat', stat(options))

@@ -7,7 +7,7 @@ const handleTemplate = urls.handlePepiteIdTemplate
 
 module.exports = (options) => {
   var committeeController = new Controller(options)
-  router.use(committeeController.getPepite)
+  router.use('/api/pepite/:pepiteId(\\d+)', committeeController.getPepite)
   router.get('/api/pepite/:pepiteId(\\d+)/committee/ping', committeeController.ping)
   urls.addTransition(router, 'committee-list', handleTemplate, committeeController.getCommittee)
   urls.addTransition(router, 'committee-next', handleTemplate, committeeController.getNextCommittee)
