@@ -1,5 +1,4 @@
 const transitions = require('./transitions.json')
-const urls = require('./transitions.js')
 const _ = require('lodash')
 
 function isActionable (state) {

@@ -28,7 +28,15 @@ const halInterceptor = interceptor(function(req, res) {
       const possible_transitions = responseFormatter.getActionableTransitions(state)
       let self_url = transitions.getUrl(state, transitions.fillTemplateWithParams(req.params))
       halResponse._links = {
-        self: { "href": req.hostname + self_url }
+        self: { href: req.hostname + self_url }
+      }
+      for (let transition of possible_transitions) {
+        halResponse._links[transition.rel] = {
+          href: req.hostname + transition.href
+        }
+        if (transition.isUrlTemplate) {
+          halResponse._links[transition.rel].templated = true 
+        }
       }
 
       send(JSON.stringify(halResponse))

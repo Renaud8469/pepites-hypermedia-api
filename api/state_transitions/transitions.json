@@ -1,13 +1,13 @@
 [
   {
     "rel": "root",
-    "accessibleFrom": ["root"],
+    "accessibleFrom": [],
     "href": "/api/",
     "method": "get"
   },
   {
     "rel": "application-read",
-    "accessibleFrom": ["root", "application-read", "application-create", "pepite-applications"],
+    "accessibleFrom": ["application-create", "pepite-applications"],
     "href": "/api/application/{id}",
     "isUrlTemplate": true,
     "method": "get"
@@ -110,7 +110,7 @@
   },
   {
     "rel": "application-update",
-    "accessibleFrom": ["root", "application-read", "application-create"],
+    "accessibleFrom": ["application-read", "application-create"],
     "href": "/api/application/{id}",
     "isUrlTemplate": true,
     "method": "put",
@@ -216,7 +216,7 @@
   },
   {
     "rel": "application-review",
-    "accessibleFrom": ["root", "application-read"],
+    "accessibleFrom": ["application-read"],
     "href": "/api/committeeAnswer/{id}",
     "isUrlTemplate": true,
     "method": "put",
@@ -235,14 +235,14 @@
   },
   {
     "rel": "pepite-read",
-    "accessibleFrom": ["root", "pepite-list"],
+    "accessibleFrom": ["pepite-list"],
     "href": "/api/pepite/{id}",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "pepite-applications",
-    "accessibleFrom": ["root", "pepite-list", "pepite-read"],
+    "accessibleFrom": ["pepite-list", "pepite-read"],
     "href": "/api/pepite/{id}/application",
     "isUrlTemplate": true,
     "method": "get",
@@ -264,7 +264,7 @@
   },
   {
     "rel": "committee-create",
-    "accessibleFrom": ["root", "commitee-list", "pepite-read"],
+    "accessibleFrom": ["commitee-list", "pepite-read"],
     "href": "/api/pepite/{pepiteId}/committee/",
     "isUrlTemplate": true,
     "method": "post",
@@ -304,21 +304,21 @@
   },
   {
     "rel": "region-read",
-    "accessibleFrom": ["root", "region-list"],
+    "accessibleFrom": ["region-list"],
     "href": "/api/region/{id}",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "region-schools",
-    "accessibleFrom": ["root", "region-list", "region-read"],
+    "accessibleFrom": ["region-list", "region-read"],
     "href": "/api/region/{id}/establishment",
     "isUrlTemplate": true,
     "method": "get"
   }, 
   {
     "rel": "region-pepites",
-    "accessibleFrom": ["root", "region-list", "region-read"],
+    "accessibleFrom": ["region-list", "region-read"],
     "href": "/api/region/{id}/pepite",
     "isUrlTemplate": true,
     "method": "get"
@@ -331,7 +331,7 @@
   },
   {
     "rel": "school-read",
-    "accessibleFrom": ["root", "school-list"],
+    "accessibleFrom": ["school-list"],
     "href": "/api/establishment/{id}",
     "isUrlTemplate": true,
     "method": "get"
