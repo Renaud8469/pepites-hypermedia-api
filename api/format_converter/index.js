@@ -1,5 +1,6 @@
 const interceptor = require('express-interceptor')
-// const transitions = require('../state_transitions/transitions')
+const responseFormatter = require('../state_transitions/responses')
+const transitions = require('../state_transitions/transitions')
 
 const halInterceptor = interceptor(function(req, res) {
   return {
@@ -22,6 +23,14 @@ const halInterceptor = interceptor(function(req, res) {
       } else { 
         halResponse = data
       }
+
+      // Add links
+      const possible_transitions = responseFormatter.getActionableTransitions(state)
+      let self_url = transitions.getUrl(state, transitions.fillTemplateWithParams(req.params))
+      halResponse._links = {
+        self: { "href": req.hostname + self_url }
+      }
+
       send(JSON.stringify(halResponse))
     }
   }

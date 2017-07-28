@@ -77,6 +77,19 @@ function fillTemplateWithId (id) {
   }
 }
 
+function fillTemplateWithParams (params) {
+  return function (url) {
+    let newUrl = url
+    if (params.pepiteId) {
+      newUrl = newUrl.replace('{pepiteId}', params.pepiteId)
+    } 
+    if (params.id) {
+      newUrl = newUrl.replace('{id}', params.id)
+    }
+    return newUrl
+  }
+}
+
 module.exports = {
   addTransition, 
   getUrl, 
@@ -85,5 +98,5 @@ module.exports = {
   handleIntIdTemplate, 
   handleApplicationTemplate,
   handlePepiteIdTemplate,
-  fillTemplateWithId
+  fillTemplateWithParams
 }
