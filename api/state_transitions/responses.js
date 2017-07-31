@@ -25,7 +25,26 @@ function getActionableTransitions (state) {
   return _.filter(transitions, isActionable(state))
 }
 
+function getRelevantParams(state, req, body) {
+  if (body._id) {
+    switch (/(\w+)-/.exec(state)[0]) {
+    case 'application-':
+      return { id : body._id }
+    case 'pepite-':
+      return { pepiteId: body._id, id: body._id }
+    case 'committee-':
+      return { pepiteId: req.params.pepiteId, id: body._id }
+    case 'region':
+      return { id : body._id }
+    default:
+      break
+    }
+  }
+  return req.params
+}
+
 module.exports = {
   getActionableTransitions, 
-  toFillWithParams
+  toFillWithParams, 
+  getRelevantParams
 }

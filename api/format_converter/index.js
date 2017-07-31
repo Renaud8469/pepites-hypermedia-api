@@ -19,7 +19,11 @@ const halInterceptor = interceptor(function(req, res) {
       let halResponse = {}
       if (data instanceof Array) {
         halResponse._embedded = {}
-        halResponse._embedded[state.substring(0, state.indexOf('-list'))] = data
+        if (state.indexOf('-list') > -1 ) {
+          halResponse._embedded[state.substring(0, state.indexOf('-list'))] = data
+        } else {
+          halResponse._embedded[state.substring(state.indexOf('-')+1)] = data
+        }
       } else { 
         halResponse = data
       }
@@ -30,10 +34,11 @@ const halInterceptor = interceptor(function(req, res) {
       halResponse._links = {
         self: { href: req.hostname + self_url }
       }
+      const params = responseFormatter.getRelevantParams(state, req, data)
       for (let transition of possible_transitions) {
         if (responseFormatter.toFillWithParams(transition, state)) {
           halResponse._links[transition.rel] = {
-            href: req.hostname + transitions.fillTemplateWithParams(req.params)(transition.href)
+            href: req.hostname + transitions.fillTemplateWithParams(params)(transition.href)
           }
         } else {
           halResponse._links[transition.rel] = {
