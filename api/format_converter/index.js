@@ -31,11 +31,17 @@ const halInterceptor = interceptor(function(req, res) {
         self: { href: req.hostname + self_url }
       }
       for (let transition of possible_transitions) {
-        halResponse._links[transition.rel] = {
-          href: req.hostname + transition.href
-        }
-        if (transition.isUrlTemplate) {
-          halResponse._links[transition.rel].templated = true 
+        if (responseFormatter.toFillWithParams(transition, state)) {
+          halResponse._links[transition.rel] = {
+            href: req.hostname + transitions.fillTemplateWithParams(req.params)(transition.href)
+          }
+        } else {
+          halResponse._links[transition.rel] = {
+            href: req.hostname + transition.href
+          }
+          if (transition.isUrlTemplate) {
+            halResponse._links[transition.rel].templated = true 
+          }
         }
       }
 

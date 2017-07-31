@@ -1,10 +1,24 @@
 const transitions = require('./transitions.json')
 const _ = require('lodash')
 
-function isActionable (state) {
+function isActionable (currentState) {
   return function (transition) {
-    return transition.accessibleFrom.indexOf(state) > -1
+    for (let origin of transition.accessibleFrom) {
+      if (origin.state === currentState) {
+        return true
+      }
+    }
+    return false
   }
+}
+
+function toFillWithParams(transition, currentState) {
+  for (let origin of transition.accessibleFrom) {
+    if (origin.state === currentState && origin.withCurrentParams) {
+      return true
+    }
+  }
+  return false
 }
 
 function getActionableTransitions (state) {
@@ -12,5 +26,6 @@ function getActionableTransitions (state) {
 }
 
 module.exports = {
-  getActionableTransitions
+  getActionableTransitions, 
+  toFillWithParams
 }

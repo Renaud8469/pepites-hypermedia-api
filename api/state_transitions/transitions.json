@@ -7,14 +7,27 @@
   },
   {
     "rel": "application-read",
-    "accessibleFrom": ["application-create", "pepite-applications"],
+    "accessibleFrom": [
+      {
+        "state": "application-create",
+        "withCurrentParams": true
+      },
+      {
+        "state": "pepite-applications",
+        "withCurrentParams": false
+      },
+      {
+        "state": "application-update",
+        "withCurrentParams": true
+      }
+    ],
     "href": "/api/application/{id}",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "application-create",
-    "accessibleFrom": ["root"],
+    "accessibleFrom": [{"state": "root"}],
     "href": "/api/application",
     "method": "post",
     "template":{
@@ -110,7 +123,16 @@
   },
   {
     "rel": "application-update",
-    "accessibleFrom": ["application-read", "application-create"],
+    "accessibleFrom": [
+      {
+        "state":"application-read",
+        "withCurrentParams": true
+      },
+      {
+       "state": "application-create",
+       "withCurrentParams": true
+      }
+    ],
     "href": "/api/application/{id}",
     "isUrlTemplate": true,
     "method": "put",
@@ -209,14 +231,32 @@
   },
   {
     "rel": "application-send",
-    "accessibleFrom": ["application-create", "application-read", "application-update"],
+    "accessibleFrom": [
+      {
+        "state": "application-create",
+        "withCurrentParams": true
+      },
+      {
+        "state": "application-read",
+        "withCurrentParams": true
+      },
+      {
+        "state": "application-update",
+        "withCurrentParams": true
+      }       
+    ],
     "href": "/api/application/{id}/send",
     "isUrlTemplate": true,
     "method": "put"
   },
   {
     "rel": "application-review",
-    "accessibleFrom": ["application-read"],
+    "accessibleFrom": [
+      {
+        "state": "application-read",
+        "withCurrentParams": true
+      }
+    ],
     "href": "/api/committeeAnswer/{id}",
     "isUrlTemplate": true,
     "method": "put",
@@ -229,20 +269,25 @@
   },
   {
     "rel": "pepite-list",
-    "accessibleFrom": ["root", "pepite-read"],
+    "accessibleFrom": [{ "state": "root"}, {"state": "pepite-read"}],
     "href": "/api/pepite",
     "method": "get"
   },
   {
     "rel": "pepite-read",
-    "accessibleFrom": ["pepite-list"],
+    "accessibleFrom": [{"state": "pepite-list"}],
     "href": "/api/pepite/{id}",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "pepite-applications",
-    "accessibleFrom": ["pepite-list", "pepite-read"],
+    "accessibleFrom": [{ "state": "pepite-list"},
+      {
+        "state": "pepite-read", 
+        "withCurrentParams": true
+      }
+    ],
     "href": "/api/pepite/{id}/application",
     "isUrlTemplate": true,
     "method": "get",
@@ -250,21 +295,44 @@
   },
   {
     "rel": "committee-list",
-    "accessibleFrom": ["pepite-list", "pepite-read"],
+    "accessibleFrom": [{ "state": "pepite-list"},
+      {
+        "state": "pepite-read", 
+        "withCurrentParams": true
+      }
+    ],
     "href": "/api/pepite/{pepiteId}/committee/",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "committee-next",
-    "accessibleFrom": ["pepite-list", "pepite-read","committee-list"],
+    "accessibleFrom": [{ "state": "pepite-list"},
+      {
+        "state": "committee-list",
+        "withCurrentParams": true
+      },
+      {
+        "state": "pepite-read", 
+        "withCurrentParams": true
+      }
+    ],
     "href": "/api/pepite/{pepiteId}/committee/next",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "committee-create",
-    "accessibleFrom": ["commitee-list", "pepite-read"],
+    "accessibleFrom": [
+      {
+        "state": "committee-list",
+        "withCurrentParams": true
+      },
+      {
+        "state": "pepite-read", 
+        "withCurrentParams": true
+      }
+    ],
     "href": "/api/pepite/{pepiteId}/committee/",
     "isUrlTemplate": true,
     "method": "post",
@@ -277,7 +345,16 @@
   },
   {
     "rel": "committee-update",
-    "accessibleFrom": ["commitee-list", "committee-create"],
+    "accessibleFrom": [
+      {
+        "state": "committee-list",
+        "withCurrentParams": true
+      },
+      {
+        "state": "committee-create", 
+        "withCurrentParams": true
+      }
+    ],
     "href": "/api/pepite/{pepiteId}/committee/{id}",
     "isUrlTemplate": true,
     "method": "put",
@@ -290,7 +367,20 @@
   },
   {
     "rel": "committee-delete",
-    "accessibleFrom": ["commitee-list", "committee-create", "committee-update"],
+    "accessibleFrom": [
+      {
+        "state": "committee-list",
+        "withCurrentParams": true
+      },
+      {
+        "state": "committee-create", 
+        "withCurrentParams": true
+      },
+      {
+        "state": "committee-update", 
+        "withCurrentParams": true
+      }
+    ],
     "href": "/api/pepite/{pepiteId}/committee/{id}",
     "isUrlTemplate": true,
     "method": "delete",
@@ -298,53 +388,63 @@
   },
   {
     "rel": "region-list",
-    "accessibleFrom": ["root"],
+    "accessibleFrom": [{"state": "root"}],
     "href": "/api/region",
     "method": "get"
   },
   {
     "rel": "region-read",
-    "accessibleFrom": ["region-list"],
+    "accessibleFrom": [{"state": "region-list"}],
     "href": "/api/region/{id}",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "region-schools",
-    "accessibleFrom": ["region-list", "region-read"],
+    "accessibleFrom": [{"state": "region-list"}, 
+      {
+       "state": "region-read", 
+       "withCurrentParams": true
+      }
+    ],
     "href": "/api/region/{id}/establishment",
     "isUrlTemplate": true,
     "method": "get"
   }, 
   {
     "rel": "region-pepites",
-    "accessibleFrom": ["region-list", "region-read"],
+    "accessibleFrom": [{"state": "region-list"}, 
+      {
+       "state": "region-read", 
+       "withCurrentParams": true
+      }
+    ],
     "href": "/api/region/{id}/pepite",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "school-list",
-    "accessibleFrom": ["root"],
+    "accessibleFrom": [{"state": "root"}],
     "href": "/api/establishment/",
     "method": "get"
   },
   {
     "rel": "school-read",
-    "accessibleFrom": ["school-list"],
+    "accessibleFrom": [{"state": "school-list"}],
     "href": "/api/establishment/{id}",
     "isUrlTemplate": true,
     "method": "get"
   },
   {
     "rel": "user-list",
-    "accessibleFrom": ["root"],
+    "accessibleFrom": [{"state": "root"}],
     "href": "/api/user/",
     "method": "get"
   },
   {
     "rel": "auth",
-    "accessibleFrom": ["root"],
+    "accessibleFrom": [{"state": "root"}],
     "href": "/api/auth/",
     "method": "post",
     "template": {
