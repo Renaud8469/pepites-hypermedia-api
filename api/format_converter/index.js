@@ -32,7 +32,8 @@ const halInterceptor = interceptor(function(req, res) {
         }
 
       // Add links
-        const possible_transitions = responseFormatter.getActionableTransitions(state)
+        let possible_transitions = responseFormatter.getActionableTransitions(state)
+        possible_transitions = responseFormatter.filterAuthTransitions(req, possible_transitions)
         let self_url = transitions.getUrl(state, transitions.fillTemplateWithParams(req.params))
         halResponse._links = {
           self: { href: req.hostname + self_url }

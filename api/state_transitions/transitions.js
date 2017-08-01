@@ -6,36 +6,19 @@ const addState = require('./state')
 // Function to add a transition to a router
 function addTransition (router, name, handleTemplate, target) {
   const transition = getUrlWithMethod(name, handleTemplate)
-  if (transition.authRequired) {
-    switch (transition.method) {
-    case 'post':
-      router.post(transition.url, auth.isAuthenticated(), addState(name), target)
-      break
-    case 'put':
-      router.put(transition.url, auth.isAuthenticated(), addState(name), target)
-      break
-    case 'delete':
-      router.delete(transition.url, auth.isAuthenticated(), addState(name), target)
-      break
-    case 'get':
-    default:
-      router.get(transition.url, auth.isAuthenticated(), addState(name), target)
-    }
-  } else {
-    switch (transition.method) {
-    case 'post':
-      router.post(transition.url, addState(name), target)
-      break
-    case 'put':
-      router.put(transition.url, addState(name), target)
-      break
-    case 'delete':
-      router.delete(transition.url, addState(name), target)
-      break
-    case 'get':
-    default:
-      router.get(transition.url, addState(name), target)
-    }
+  switch (transition.method) {
+  case 'post':
+    router.post(transition.url, auth.isAuthenticated(transition.authRequired), addState(name), target)
+    break
+  case 'put':
+    router.put(transition.url, auth.isAuthenticated(transition.authRequired), addState(name), target)
+    break
+  case 'delete':
+    router.delete(transition.url, auth.isAuthenticated(transition.authRequired), addState(name), target)
+    break
+  case 'get':
+  default:
+    router.get(transition.url, auth.isAuthenticated(transition.authRequired), addState(name), target)
   }
 }
 

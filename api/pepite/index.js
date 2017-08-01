@@ -10,7 +10,7 @@ module.exports = (options) => {
   var pepiteController = new Controller(options)
   var applicationController = new ApplicationController(options)
   router.get('/api/pepite/ping', pepiteController.ping)
-  router.get('/api/pepite/:id(\\d+)/application/xls', auth.isAuthenticated(), applicationController.getPepiteApplicationsXls)
+  router.get('/api/pepite/:id(\\d+)/application/xls', auth.isAuthenticated(true), applicationController.getPepiteApplicationsXls)
   urls.addTransition(router, 'pepite-list', urls.handleIntIdTemplate, pepiteController.getAll)
   urls.addTransition(router, 'pepite-read', urls.handleIntIdTemplate, pepiteController.getPepite)
   urls.addTransition(router, 'pepite-applications', urls.handleIntIdTemplate, applicationController.getPepiteApplications)

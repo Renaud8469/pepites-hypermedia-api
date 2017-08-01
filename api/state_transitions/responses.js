@@ -43,8 +43,21 @@ function getRelevantParams(state, req, body) {
   return req.params
 }
 
+function isAuthorized(req) {
+  return function(transition) {
+    if (!req.user && transition.authRequired) return false
+    else return true
+  }
+}
+
+function filterAuthTransitions(req, transition_list) {
+  return _.filter(transition_list, isAuthorized(req))
+}
+
+
 module.exports = {
   getActionableTransitions, 
   toFillWithParams, 
-  getRelevantParams
+  getRelevantParams,
+  filterAuthTransitions
 }

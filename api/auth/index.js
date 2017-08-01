@@ -23,6 +23,6 @@ require('./passport-strategy').setup(User)
 module.exports = (options) => {
   const authController = new Controller(options)
   urls.addTransition(router, 'auth', urls.handleIntIdTemplate, authController.getToken)
-  router.get('/api/auth/authProtected', auth.isAuthenticated(), authController.ping)
+  router.get('/api/auth/authProtected', auth.isAuthenticated(true), authController.ping)
   return router
 }
