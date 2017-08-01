@@ -17,40 +17,44 @@ const halInterceptor = interceptor(function(req, res) {
 
       let data = JSON.parse(body)
       let halResponse = {}
-      if (data instanceof Array) {
-        halResponse._embedded = {}
-        if (state.indexOf('-list') > -1 ) {
-          halResponse._embedded[state.substring(0, state.indexOf('-list'))] = data
-        } else {
-          halResponse._embedded[state.substring(state.indexOf('-')+1)] = data
+      if (data.error) {
+        send(JSON.stringify(data))
+      } else {
+        if (data instanceof Array) {
+          halResponse._embedded = {}
+          if (state.indexOf('-list') > -1 ) {
+            halResponse._embedded[state.substring(0, state.indexOf('-list'))] = data
+          } else {
+            halResponse._embedded[state.substring(state.indexOf('-')+1)] = data
+          }
+        } else { 
+          halResponse = data
         }
-      } else { 
-        halResponse = data
-      }
 
       // Add links
-      const possible_transitions = responseFormatter.getActionableTransitions(state)
-      let self_url = transitions.getUrl(state, transitions.fillTemplateWithParams(req.params))
-      halResponse._links = {
-        self: { href: req.hostname + self_url }
-      }
-      const params = responseFormatter.getRelevantParams(state, req, data)
-      for (let transition of possible_transitions) {
-        if (responseFormatter.toFillWithParams(transition, state)) {
-          halResponse._links[transition.rel] = {
-            href: req.hostname + transitions.fillTemplateWithParams(params)(transition.href)
-          }
-        } else {
-          halResponse._links[transition.rel] = {
-            href: req.hostname + transition.href
-          }
-          if (transition.isUrlTemplate) {
-            halResponse._links[transition.rel].templated = true 
+        const possible_transitions = responseFormatter.getActionableTransitions(state)
+        let self_url = transitions.getUrl(state, transitions.fillTemplateWithParams(req.params))
+        halResponse._links = {
+          self: { href: req.hostname + self_url }
+        }
+        const params = responseFormatter.getRelevantParams(state, req, data)
+        for (let transition of possible_transitions) {
+          if (responseFormatter.toFillWithParams(transition, state)) {
+            halResponse._links[transition.rel] = {
+              href: req.hostname + transitions.fillTemplateWithParams(params)(transition.href)
+            }
+          } else {
+            halResponse._links[transition.rel] = {
+              href: req.hostname + transition.href
+            }
+            if (transition.isUrlTemplate) {
+              halResponse._links[transition.rel].templated = true 
+            }
           }
         }
-      }
 
-      send(JSON.stringify(halResponse))
+        send(JSON.stringify(halResponse))
+      }
     }
   }
 })
