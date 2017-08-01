@@ -54,6 +54,28 @@ const halInterceptor = interceptor(function(req, res) {
           }
         }
 
+        // Special case for relationships between resources
+        if (state === 'application-read' || state === 'application-create' || state === 'application-update') {
+          halResponse._links['pepite-read'] = {
+            href: transitions.getUrl('pepite-read', transitions.fillTemplateWithParams({ id: data.pepite.pepite }))
+          }
+          halResponse._links['region-read'] = {
+            href: transitions.getUrl('region-read', transitions.fillTemplateWithParams({ id: data.pepite.region }))
+          }
+          halResponse._links['school-read'] = {
+            href: transitions.getUrl('school-read', transitions.fillTemplateWithParams({ id: data.pepite.establishment }))
+          }
+
+        } else if (state === 'school-read') {
+          halResponse._links['pepite-read'] = {
+            href: transitions.getUrl('pepite-read', transitions.fillTemplateWithParams({ id: data.pepite }))
+          }
+          halResponse._links['region-read'] = {
+            href: transitions.getUrl('region-read', transitions.fillTemplateWithParams({ id: data.region }))
+          }
+        }
+
+
         send(JSON.stringify(halResponse))
       }
     }
