@@ -1,9 +1,10 @@
 const express = require('express')
 const Controller = require('./committee.controller')
-const urls = require('../state_transitions/transitions')
+const urls = require('../state_transitions/state_to_routes')
+const transitions = require('../state_transitions/transitions')
 
 var router = express.Router()
-const handleTemplate = urls.handlePepiteIdTemplate
+const handleTemplate = transitions.handlePepiteIdTemplate
 
 module.exports = (options) => {
   var committeeController = new Controller(options)
