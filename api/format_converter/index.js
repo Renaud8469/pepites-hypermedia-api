@@ -2,6 +2,12 @@ const interceptor = require('express-interceptor')
 const responseFormatter = require('../state_transitions/responses')
 const transitions = require('../state_transitions/transitions')
 
+
+function getSingleResourceName(name) {
+  if (name[name.length -1] === 's') return name.slice(0, -1)
+  else return name
+}
+
 const halInterceptor = interceptor(function(req, res) {
   return {
     isInterceptable : function() {
@@ -72,6 +78,21 @@ const halInterceptor = interceptor(function(req, res) {
           }
           halResponse._links['region-read'] = {
             href: transitions.getUrl('region-read', transitions.fillTemplateWithParams({ id: data.region }))
+          }
+        }
+
+        // Add "self" links for each embedded resource
+        if (halResponse._embedded) {
+          for (let resource_name in halResponse._embedded) {
+            let res_list = halResponse._embedded[resource_name]
+            if (resource_name !== 'committee') {
+              for (let element of res_list) {
+                element._links = {}
+                element._links.self = {
+                  href: transitions.getUrl(getSingleResourceName(resource_name) + '-read', transitions.fillTemplateWithParams({ id : element._id }))
+                }
+              }
+            }
           }
         }
 
