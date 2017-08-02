@@ -1,26 +1,5 @@
 const transitions = require('./transitions.json')
 const _ = require('lodash')
-const auth = require('../auth/auth.service')
-const addState = require('./state')
-
-// Function to add a transition to a router
-function addTransition (router, name, handleTemplate, target) {
-  const transition = getUrlWithMethod(name, handleTemplate)
-  switch (transition.method) {
-  case 'post':
-    router.post(transition.url, auth.isAuthenticated(transition.authRequired), addState(name), target)
-    break
-  case 'put':
-    router.put(transition.url, auth.isAuthenticated(transition.authRequired), addState(name), target)
-    break
-  case 'delete':
-    router.delete(transition.url, auth.isAuthenticated(transition.authRequired), addState(name), target)
-    break
-  case 'get':
-  default:
-    router.get(transition.url, auth.isAuthenticated(transition.authRequired), addState(name), target)
-  }
-}
 
 // Utility functions to retrieve useful info from the "state transitions" file.
 function getUrl (name, handleTemplate) {
@@ -39,6 +18,19 @@ function getUrlWithMethod (name, handleTemplate) {
 
 function getUrlWithId (name, id) {
   return getUrl(name, fillTemplateWithId(id))
+}
+
+/*
+ * Based on a transition and the current state, 
+ * checks if a template needs to be filled with the current request params
+ */
+function toFillWithParams(transition, currentState) {
+  for (let origin of transition.accessibleFrom) {
+    if (origin.state === currentState && origin.withCurrentParams) {
+      return true
+    }
+  }
+  return false
 }
 
 // Utility functions to handle the various URL templates that can be passed. 
@@ -74,12 +66,12 @@ function fillTemplateWithParams (params) {
 }
 
 module.exports = {
-  addTransition, 
   getUrl, 
   getUrlWithMethod, 
   getUrlWithId, 
   handleIntIdTemplate, 
   handleApplicationTemplate,
   handlePepiteIdTemplate,
+  toFillWithParams,
   fillTemplateWithParams
 }
