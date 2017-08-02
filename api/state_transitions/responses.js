@@ -1,14 +1,17 @@
 const transitions = require('./transitions.json')
 const _ = require('lodash')
 
-function isActionable (currentState) {
+function isActionable (req) {
   return function (transition) {
-    for (let origin of transition.accessibleFrom) {
-      if (origin.state === currentState) {
-        return true
+    if (!req.user && transition.authRequired) return false
+    else { 
+      for (let origin of transition.accessibleFrom) {
+        if (origin.state === req.state) {
+          return true
+        }
       }
+      return false
     }
-    return false
   }
 }
 
@@ -21,13 +24,10 @@ function toFillWithParams(transition, currentState) {
   return false
 }
 
-function getActionableTransitions (state) {
-  return _.filter(transitions, isActionable(state))
-}
 
-function getRelevantParams(state, req, body) {
+function getRelevantParams(req, body) {
   if (body._id) {
-    switch (/(\w+)-/.exec(state)[0]) {
+    switch (/(\w+)-/.exec(req.state)[0]) {
     case 'application-':
       return { id : body._id }
     case 'pepite-':
@@ -43,21 +43,12 @@ function getRelevantParams(state, req, body) {
   return req.params
 }
 
-function isAuthorized(req) {
-  return function(transition) {
-    if (!req.user && transition.authRequired) return false
-    else return true
-  }
+function getActionableTransitions (req) {
+  return _.filter(transitions, isActionable(req))
 }
-
-function filterAuthTransitions(req, transition_list) {
-  return _.filter(transition_list, isAuthorized(req))
-}
-
 
 module.exports = {
   getActionableTransitions, 
   toFillWithParams, 
   getRelevantParams,
-  filterAuthTransitions
 }
