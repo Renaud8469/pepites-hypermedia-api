@@ -1,5 +1,6 @@
 const transitions = require('./transitions.json')
 const _ = require('lodash')
+const stateHandler = require('./state')
 
 // Utility functions to retrieve useful info from the "state transitions" file.
 function getUrl (name, handleTemplate) {
@@ -65,6 +66,15 @@ function fillTemplateWithParams (params) {
   }
 }
 
+function getUrlFromTransition (transition, state, params, data) {
+  const relevantParams = stateHandler.getRelevantParams(state, params, data)
+  if (toFillWithParams(transition, state)) {
+    return fillTemplateWithParams(relevantParams)(transition.href)
+  } else {
+    return transition.href
+  }
+}
+
 module.exports = {
   getUrl, 
   getUrlWithMethod, 
@@ -73,5 +83,6 @@ module.exports = {
   handleApplicationTemplate,
   handlePepiteIdTemplate,
   toFillWithParams,
-  fillTemplateWithParams
+  fillTemplateWithParams,
+  getUrlFromTransition
 }

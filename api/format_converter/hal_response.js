@@ -38,22 +38,16 @@ function addLinksToHalResponse (halResponse, data, isAuth, state, params, host) 
   halResponse._links = {
     self: { href: host + self_url }
   }
-  const relevantParams = stateHandler.getRelevantParams(state, params, data)
   for (let transition of possible_transitions) {
-    if (transitions.toFillWithParams(transition, state)) {
-      halResponse._links[transition.rel] = {
-        href: host + transitions.fillTemplateWithParams(relevantParams)(transition.href)
-      }
-    } else {
-      halResponse._links[transition.rel] = {
-        href: host + transition.href
-      }
-      if (transition.isUrlTemplate) {
-        halResponse._links[transition.rel].templated = true 
-      }
+    halResponse._links[transition.rel] = {
+      href: host + transitions.getUrlFromTransition(transition, state, params, data)
+    }
+    if (transition.isUrlTemplate) {
+      halResponse._links[transition.rel].templated = true 
     }
   }
 }
+
 
 /*
  * Add "self" links to all resources in collections
