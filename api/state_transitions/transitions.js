@@ -11,22 +11,6 @@ function getSingleResourceName(name) {
   else return name
 }
 
-function getReadTransitionName(state, isList) {
-  if (state.indexOf('-') > -1) {
-    if (isList) {
-      if (state.indexOf('-list') > -1) {
-        return getSingleResourceName(state.substring(0, state.indexOf('-'))) + '-read'
-      } else {
-        return getSingleResourceName(state.substring(state.indexOf('-')+1)) + '-read'
-      }
-    } else {
-      return state.substring(0, state.indexOf('-')) + '-read'
-    }
-  } else {
-    return state
-  }
-}
-
 // Utility functions to retrieve useful info from the "state transitions" file.
 function getUrl (name, handleTemplate) {
   const transition = _.find(transitions, {'rel': name})
@@ -44,6 +28,10 @@ function getUrlWithMethod (name, handleTemplate) {
 
 function getUrlWithId (name, id) {
   return getUrl(name, fillTemplateWithId(id))
+}
+
+function getTransition (state) {
+  return _.find(transitions, {'rel': state})
 }
 
 /*
@@ -111,5 +99,5 @@ module.exports = {
   fillTemplateWithParams,
   getUrlFromTransition,
   getSingleResourceName,
-  getReadTransitionName
+  getTransition
 }

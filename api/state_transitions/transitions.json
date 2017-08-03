@@ -1,12 +1,14 @@
 [
   {
     "rel": "root",
+    "resource": "root",
     "accessibleFrom": [],
     "href": "/api/",
     "method": "get"
   },
   {
     "rel": "application-read",
+    "resource": "application",
     "accessibleFrom": [
       {
         "state": "application-create",
@@ -27,6 +29,7 @@
   },
   {
     "rel": "application-create",
+    "resource": "application",
     "accessibleFrom": [{"state": "root"}],
     "href": "/api/application",
     "method": "post",
@@ -123,6 +126,7 @@
   },
   {
     "rel": "application-update",
+    "resource": "application",
     "accessibleFrom": [
       {
         "state":"application-read",
@@ -231,6 +235,7 @@
   },
   {
     "rel": "application-send",
+    "resource": "application",
     "accessibleFrom": [
       {
         "state": "application-create",
@@ -251,6 +256,7 @@
   },
   {
     "rel": "application-review",
+    "resource": "committee-answer",
     "accessibleFrom": [
       {
         "state": "application-read",
@@ -269,12 +275,14 @@
   },
   {
     "rel": "pepite-list",
+    "resource": "pepite",
     "accessibleFrom": [{ "state": "root"}, {"state": "pepite-read"}],
     "href": "/api/pepite",
     "method": "get"
   },
   {
     "rel": "pepite-read",
+    "resource": "pepite",
     "accessibleFrom": [{"state": "pepite-list"}],
     "href": "/api/pepite/{id}",
     "isUrlTemplate": true,
@@ -282,6 +290,7 @@
   },
   {
     "rel": "pepite-applications",
+    "resource": "application",
     "accessibleFrom": [{ "state": "pepite-list"},
       {
         "state": "pepite-read", 
@@ -295,6 +304,7 @@
   },
   {
     "rel": "committee-list",
+    "resource": "committee",
     "accessibleFrom": [{ "state": "pepite-list"},
       {
         "state": "pepite-read", 
@@ -307,6 +317,7 @@
   },
   {
     "rel": "committee-next",
+    "resource": "committee",
     "accessibleFrom": [{ "state": "pepite-list"},
       {
         "state": "committee-list",
@@ -323,6 +334,7 @@
   },
   {
     "rel": "committee-create",
+    "resource": "committee",
     "accessibleFrom": [
       {
         "state": "committee-list",
@@ -345,6 +357,7 @@
   },
   {
     "rel": "committee-update",
+    "resource": "committee",
     "accessibleFrom": [
       {
         "state": "committee-list",
@@ -367,6 +380,7 @@
   },
   {
     "rel": "committee-delete",
+    "resource": "committee",
     "accessibleFrom": [
       {
         "state": "committee-list",
@@ -388,12 +402,14 @@
   },
   {
     "rel": "region-list",
+    "resource": "region",
     "accessibleFrom": [{"state": "root"}],
     "href": "/api/region",
     "method": "get"
   },
   {
     "rel": "region-read",
+    "resource": "region",
     "accessibleFrom": [{"state": "region-list"}],
     "href": "/api/region/{id}",
     "isUrlTemplate": true,
@@ -401,6 +417,7 @@
   },
   {
     "rel": "region-schools",
+    "resource": "school",
     "accessibleFrom": [{"state": "region-list"}, 
       {
        "state": "region-read", 
@@ -413,6 +430,7 @@
   }, 
   {
     "rel": "region-pepites",
+    "resource": "pepite",
     "accessibleFrom": [{"state": "region-list"}, 
       {
        "state": "region-read", 
@@ -425,12 +443,14 @@
   },
   {
     "rel": "school-list",
+    "resource": "school",
     "accessibleFrom": [{"state": "root"}],
     "href": "/api/establishment/",
     "method": "get"
   },
   {
     "rel": "school-read",
+    "resource": "school",
     "accessibleFrom": [{"state": "school-list"}],
     "href": "/api/establishment/{id}",
     "isUrlTemplate": true,
@@ -438,12 +458,14 @@
   },
   {
     "rel": "user-list",
+    "resource": "user",
     "accessibleFrom": [{"state": "root"}],
     "href": "/api/user/",
     "method": "get"
   },
   {
     "rel": "auth",
+    "resource": "auth",
     "accessibleFrom": [{"state": "root"}],
     "href": "/api/auth/",
     "method": "post",
