@@ -2,6 +2,15 @@ const transitions = require('./transitions.json')
 const _ = require('lodash')
 const stateHandler = require('./state')
 
+/*
+ * Some state transitions are named with plural names and other with singular.
+ * This function gets rid of unwanted plurals.
+ */
+function getSingleResourceName(name) {
+  if (name[name.length -1] === 's') return name.slice(0, -1)
+  else return name
+}
+
 // Utility functions to retrieve useful info from the "state transitions" file.
 function getUrl (name, handleTemplate) {
   const transition = _.find(transitions, {'rel': name})
@@ -19,6 +28,10 @@ function getUrlWithMethod (name, handleTemplate) {
 
 function getUrlWithId (name, id) {
   return getUrl(name, fillTemplateWithId(id))
+}
+
+function getTransition (state) {
+  return _.find(transitions, {'rel': state})
 }
 
 /*
@@ -84,5 +97,7 @@ module.exports = {
   handlePepiteIdTemplate,
   toFillWithParams,
   fillTemplateWithParams,
-  getUrlFromTransition
+  getUrlFromTransition,
+  getSingleResourceName,
+  getTransition
 }

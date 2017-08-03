@@ -2,15 +2,6 @@ const stateHandler = require('../state_transitions/state')
 const transitions = require('../state_transitions/transitions')
 
 /*
- * Some state transitions are named with plural names and other with singular.
- * This function gets rid of unwanted plurals.
- */
-function getSingleResourceName(name) {
-  if (name[name.length -1] === 's') return name.slice(0, -1)
-  else return name
-}
-
-/*
  * Generate a minimal HAL response from the data returned by the server.
  * It can be unmodified data, but an array has to be converted into an "_embedded" property
  */
@@ -59,7 +50,7 @@ function addLinksToEmbedded (halResponse) {
       for (let element of res_list) {
         element._links = {}
         element._links.self = {
-          href: transitions.getUrl(getSingleResourceName(resource_name) + '-read', transitions.fillTemplateWithParams({ id : element._id }))
+          href: transitions.getUrl(transitions.getSingleResourceName(resource_name) + '-read', transitions.fillTemplateWithParams({ id : element._id }))
         }
       }
     }
