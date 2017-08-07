@@ -43,14 +43,14 @@ function addLinksToHalResponse (halResponse, data, isAuth, state, params, host) 
 /*
  * Add "self" links to all resources in collections
  */
-function addLinksToEmbedded (halResponse) {
+function addLinksToEmbedded (halResponse, host) {
   for (let resource_name in halResponse._embedded) {
     let res_list = halResponse._embedded[resource_name]
     if (resource_name !== 'committee') {
       for (let element of res_list) {
         element._links = {}
         element._links.self = {
-          href: transitions.getUrl(transitions.getSingleResourceName(resource_name) + '-read', transitions.fillTemplateWithParams({ id : element._id }))
+          href: host + transitions.getUrl(transitions.getSingleResourceName(resource_name) + '-read', transitions.fillTemplateWithParams({ id : element._id }))
         }
       }
     }
@@ -60,31 +60,31 @@ function addLinksToEmbedded (halResponse) {
 /*
  * Add link relations between resources 
  */
-function addRelationShips (halResponse, state, data) {
+function addRelationShips (halResponse, state, data, host) {
   if (state === 'application-read' || state === 'application-create' || state === 'application-update') {
     if (data.pepite) {
       if (data.pepite.pepite) {
         halResponse._links['pepite-read'] = {
-          href: transitions.getUrl('pepite-read', transitions.fillTemplateWithParams({ id: data.pepite.pepite }))
+          href: host + transitions.getUrl('pepite-read', transitions.fillTemplateWithParams({ id: data.pepite.pepite }))
         }
       }
       if (data.pepite.region) {
         halResponse._links['region-read'] = {
-          href: transitions.getUrl('region-read', transitions.fillTemplateWithParams({ id: data.pepite.region }))
+          href: host + transitions.getUrl('region-read', transitions.fillTemplateWithParams({ id: data.pepite.region }))
         }
       }
       if (data.pepite.establishment) {
         halResponse._links['school-read'] = {
-          href: transitions.getUrl('school-read', transitions.fillTemplateWithParams({ id: data.pepite.establishment }))
+          href: host + transitions.getUrl('school-read', transitions.fillTemplateWithParams({ id: data.pepite.establishment }))
         }
       }
     }
   } else if (state === 'school-read') {
     halResponse._links['pepite-read'] = {
-      href: transitions.getUrl('pepite-read', transitions.fillTemplateWithParams({ id: data.pepite }))
+      href: host + transitions.getUrl('pepite-read', transitions.fillTemplateWithParams({ id: data.pepite }))
     }
     halResponse._links['region-read'] = {
-      href: transitions.getUrl('region-read', transitions.fillTemplateWithParams({ id: data.region }))
+      href: host + transitions.getUrl('region-read', transitions.fillTemplateWithParams({ id: data.region }))
     }
   }
 }
@@ -99,11 +99,11 @@ function generateHalResponse(data, state, isAuth, params, host) {
   addLinksToHalResponse(halResponse, data, isAuth, state, params, host)
 
   // Special case for relationships between resources
-  addRelationShips(halResponse, state, data)
+  addRelationShips(halResponse, state, data, host)
        
   // Add "self" links for each embedded resource
   if (halResponse._embedded) {
-    addLinksToEmbedded(halResponse)
+    addLinksToEmbedded(halResponse, host)
   }
   return halResponse
 }
