@@ -256,7 +256,7 @@
   },
   {
     "rel": "application-review",
-    "resource": "committee-answer",
+    "resource": "application",
     "accessibleFrom": [
       {
         "state": "application-read",

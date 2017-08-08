@@ -15,7 +15,7 @@ function generateSirenEntity (resource, name, host, subEntityRel) {
   }
   entity.properties = resource
   entity.links = [
-  { rel: ['self'], href: host + transitions.getUrl(name === 'root' ? name : name + '-read', transitions.fillTemplateWithParams({ id: resource._id ? resource._id : undefined })) }
+  { rel: ['self'], href: host + transitions.getUrl((name === 'root' || name === 'auth') ? name : name + '-read', transitions.fillTemplateWithParams({ id: resource._id ? resource._id : undefined })) }
   ]
   return entity
 }
@@ -48,8 +48,12 @@ function addActions (sirenResponse, isAuth, data, state, params, host) {
 function addRelationships (sirenResponse, state, data, host) {
   if (!sirenResponse.entities) sirenResponse.entities = []
   if (state === 'application-read' || state === 'application-create' || state === 'application-update') {
-    for (let org of ['pepite', 'region', 'school']) {
-      sirenResponse.entities.push(generateSirenEntity({ _id: data.pepite[org]}, org, host, org + '-read'))
+    if (data.pepite) {
+      for (let org of ['pepite', 'region', 'school']) {
+        if (data.pepite[org]) {
+          sirenResponse.entities.push(generateSirenEntity({ _id: data.pepite[org]}, org, host, org + '-read'))
+        }
+      }
     }
   } else if (state === 'school-read') {
     for (let org of ['pepite', 'region']) {
