@@ -20,6 +20,23 @@ function generateSirenEntity (resource, name, host, subEntityRel) {
   return entity
 }
 
+function transformTemplate (template) {
+  let fields = []
+  for (let prop in template) {
+    if (template[prop] instanceof Object) {
+      fields.push({
+        name: prop,
+        type: transformTemplate(template[prop])
+      })
+    } else {
+      fields.push({
+        name: prop, 
+        type: template[prop]
+      })
+    }
+  }
+  return fields
+}
 
 function addActions (sirenResponse, isAuth, data, state, params, host) {
   let possible_transitions = stateHandler.getActionableTransitions(isAuth, state)
@@ -31,13 +48,7 @@ function addActions (sirenResponse, isAuth, data, state, params, host) {
       href: host + transitions.getUrlFromTransition(transition, state, params, data)
     }
     if (transition.template) {
-      action.fields = []
-      for (let prop in transition.template) {
-        action.fields.push({
-          name: prop,
-          type: transition.template[prop]
-        })
-      }
+      action.fields = transformTemplate(transition.template)
     }
     actions.push(action)
   }
