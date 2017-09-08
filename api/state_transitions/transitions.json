@@ -277,14 +277,14 @@
     "rel": "pepite-list",
     "resource": "pepite",
     "accessibleFrom": [{ "state": "root"}, {"state": "pepite-read"}],
-    "href": "/api/pepites",
+    "href": "/api/pepite",
     "method": "get"
   },
   {
     "rel": "pepite-read",
     "resource": "pepite",
     "accessibleFrom": [{"state": "pepite-list"}],
-    "href": "/api/pepites/{id}",
+    "href": "/api/pepite/{id}",
     "isUrlTemplate": true,
     "method": "get"
   },
@@ -297,7 +297,7 @@
         "withCurrentParams": true
       }
     ],
-    "href": "/api/pepites/{id}/application",
+    "href": "/api/pepite/{id}/application",
     "isUrlTemplate": true,
     "method": "get",
     "authRequired": true
